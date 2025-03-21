@@ -10,15 +10,14 @@ pipeline {
             steps {
                 echo "building the application"
                 sh "mvn clean package"
-                echo "application build successfully"
             }
 
             post {
                 success {
                     archiveArtifacts artifacts: '**/target/*.war'
-                    echo "artifacts are stored successfully"
                 }
             }
         }
     }
+
 }
