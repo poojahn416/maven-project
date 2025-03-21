@@ -8,9 +8,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                echo "building theapplication"
+                echo "building the application"
                 sh "mvn clean package"
-                echo "build the application and package into jar file"
+                echo "application build successfully"
             }
 
             post {
