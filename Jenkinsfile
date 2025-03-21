@@ -20,12 +20,6 @@ pipeline {
                 sh "mvn clean package"
                 echo "hello $NAME ${params.LASTNAME}"
             }
-
-            post {
-                success {
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
         }
 
         stage('test') {
@@ -40,6 +34,12 @@ pipeline {
                     steps {
                         echo "this is test B"
                     }
+                }
+            }
+            post {
+                success {
+                    echo "All tests passed. Archiving artifacts..."
+                    archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
