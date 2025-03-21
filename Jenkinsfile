@@ -27,6 +27,22 @@ pipeline {
                 }
             }
         }
+
+        stage('test') {
+            parellel {
+                stage('testA') {
+                    steps{
+                        echo "this is test A"
+                    }
+                }
+
+                stage('testB') {
+                    steps {
+                        echo "this is test B"
+                    }
+                }
+            }
+        }
     }
 
 }
