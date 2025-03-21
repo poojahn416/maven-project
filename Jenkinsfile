@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo "building the application"
                 sh "mvn clean package"
-                echo "hello &NAME &LASTNAME"
+                echo "hello $NAME ${params.LASTNAME}"
             }
 
             post {
