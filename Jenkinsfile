@@ -35,12 +35,12 @@ pipeline {
                         echo "this is test B"
                     }
                 }
+            }
 
-                post {
+            post {
                 success {
                     archiveArtifacts artifacts: '**/target/*.war'
                 }
-            }
             }
         }
     }
