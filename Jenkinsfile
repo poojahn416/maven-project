@@ -15,7 +15,7 @@ pipeline {
 
             post {
                 success {
-                    archieveArtifacts artifacts: '**/target/*.war'
+                    archiveArtifacts artifacts: '**/target/*.war'
                     sh "artifacts are stored successfully"
                 }
             }
