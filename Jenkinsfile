@@ -16,7 +16,7 @@ pipeline {
             post {
                 success {
                     archiveArtifacts artifacts: '**/target/*.war'
-                    sh "artifacts are stored successfully"
+                    echo "artifacts are stored successfully"
                 }
             }
         }
