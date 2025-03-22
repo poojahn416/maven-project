@@ -42,23 +42,25 @@ pipeline {
             post {
                 success {
                     dir("webapp/target/") {
-                        stash name: "maven_build", includes: "*.war"
+                        stash name: "maven_build", includes: "**/*.war"
                     }
                 }
             }
         }
 
         stage('deploy_dev') {
-            when { expression { params.SELECT_ENVIRONMENT == 'dev' }
-            beforeAgent true }
+            when { 
+                beforeAgent true 
+                expression { params.SELECT_ENVIRONMENT == 'dev' } 
+            }
             agent { label 'devserver' }
             steps {
-                dir("/var/www") {
+                dir("/var/www/html") {
                     unstash "maven_build"
                 }
                 sh """
                 cd /var/www/html/
-                jar -xvf webapp.war
+                jar -xf webapp.war
                 """
             }
         }
