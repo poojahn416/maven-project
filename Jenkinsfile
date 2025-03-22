@@ -9,13 +9,13 @@ pipeline {
         choice choices: ['dev', 'prod'], name: 'SELECT_ENVIRONMENT'
     }
 
-    environment {
-        NAME = "darshan"
-    }
-
     stages {
         stage('build') {
             steps {
+                script {
+                    file = load "script.groovy"
+                    file.hello()
+                }
                 echo "building the application"
                 sh "mvn clean package -DskipTests=true"
             }
@@ -63,6 +63,27 @@ pipeline {
                 jar -xvf webapp.war
                 """
             }
+        }
+
+        stage('deploy_prod') {
+            when {
+                beforeAgent true
+                expression { params.SELECT_ENVIRONMENT == 'prod' }
+            }
+            agent { label 'prodserver' }
+            steps {
+                timeout(time:5, unit:'DAYS') {
+                    input message: 'Deployment approved?'
+                }
+                dir("/var/www/html") {
+                    unstash "maven_build"
+                }
+                sh """
+                cd /var/www/html/
+                jar -xvf webapp.war
+                """
+            }
+
         }
     }
 
