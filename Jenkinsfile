@@ -60,7 +60,7 @@ pipeline {
                 }
                 sh """
                 cd /var/www/html/
-                jar -xf webapp.war
+                jar -xvf webapp.war
                 """
             }
         }
